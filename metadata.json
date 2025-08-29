@@ -1,0 +1,5 @@
+{
+  "name": "Interactive PRD Hybrid Assistant",
+  "description": "A web application that guides users through creating customized Product Requirements Documents (PRDs) via an adaptive question-and-answer interface that adjusts depth based on project needs.",
+  "requestFramePermissions": []
+}
