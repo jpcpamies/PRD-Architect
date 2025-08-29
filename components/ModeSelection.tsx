@@ -17,6 +17,58 @@ const HowItWorksStep: React.FC<{ icon: React.ReactNode, title: string, descripti
     </div>
 );
 
+const ProfileRoadblockCard: React.FC<{
+  icon: string;
+  title: string;
+  fears: string[];
+  objections: string[];
+  pains: string[];
+  helpText: string;
+  ctaText: string;
+  ctaMode: PrdMode;
+  onCtaClick: (mode: PrdMode) => void;
+  color: string;
+}> = ({ icon, title, fears, objections, pains, helpText, ctaText, ctaMode, onCtaClick, color }) => (
+  <div className={`flex flex-col bg-gray-800/50 border rounded-xl p-6 transition-all duration-300 transform hover:-translate-y-1 ${color}`}>
+    <div className="flex items-center gap-4 mb-4">
+      <span className="text-4xl">{icon}</span>
+      <h3 className="text-2xl font-bold text-white">{title}</h3>
+    </div>
+    
+    <div className="space-y-4 text-sm text-gray-300 flex-grow">
+      <div>
+        <h4 className="font-semibold text-gray-400 mb-1">Fears</h4>
+        <ul className="list-disc list-inside space-y-1">
+          {fears.map((fear, i) => <li key={i}>“{fear}”</li>)}
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-semibold text-gray-400 mb-1">Objections</h4>
+        <ul className="list-disc list-inside space-y-1">
+          {objections.map((obj, i) => <li key={i}>“{obj}”</li>)}
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-semibold text-gray-400 mb-1">Pains</h4>
+        <ul className="list-disc list-inside space-y-1">
+          {pains.map((pain, i) => <li key={i}>{pain}</li>)}
+        </ul>
+      </div>
+      <div className="pt-2">
+        <h4 className="font-semibold text-indigo-400 mb-1">How we help</h4>
+        <p className="text-gray-300">{helpText}</p>
+      </div>
+    </div>
+    
+    <button
+      onClick={() => onCtaClick(ctaMode)}
+      className={`w-full mt-6 px-6 py-3 rounded-lg font-semibold text-white transition-colors ${color.replace('border', 'bg').replace('/50', '')} hover:opacity-90`}
+    >
+      {ctaText}
+    </button>
+  </div>
+);
+
 const ModeCard: React.FC<{
   mode: PrdMode,
   title: string,
@@ -85,6 +137,52 @@ const ModeSelection: React.FC<ModeSelectionProps> = ({ onSelectMode }) => {
               description="Take your PRD to Claude, ChatGPT, or any AI. They'll guide you step-by-step through building your app."
             />
           </div>
+        </section>
+
+        {/* Does This Sound Like You Section */}
+        <section className="py-20">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">Does this sound like you?</h2>
+            <p className="text-center text-gray-400 mb-2 max-w-2xl mx-auto">Three profiles, same roadblocks. Here’s how we solve them.</p>
+            <p className="text-center text-indigo-400 font-semibold mb-12">No blank canvas. A guided plan.</p>
+            
+            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <ProfileRoadblockCard
+                    icon="🎨"
+                    title="Busy Creative"
+                    fears={["I’m not technical", "I’ll break something"]}
+                    objections={["Tutorials lie", "I don’t have time"]}
+                    pains={["Blank canvas", "jargon (API, database)", "paralysis"]}
+                    helpText="Our assistant asks step by step, generates a guided PRD, and gives you sequential prompts so any AI can build your app without coding."
+                    ctaText="Start with Quick (5 min)"
+                    ctaMode={PrdMode.Quick}
+                    onCtaClick={onSelectMode}
+                    color="border-blue-500/50 hover:border-blue-500"
+                />
+                <ProfileRoadblockCard
+                    icon="💼"
+                    title="Blocked Professional"
+                    fears={["Integrations failing", "not scaling"]}
+                    objections={["No-code is a toy", "vendor lock-in trap"]}
+                    pains={["Connecting Stripe/CRM/APIs", "conditional logic", "wasted time"]}
+                    helpText="PRD with integration recipes, phase-by-phase validations, and escape routes (prompts for advanced cases). The AI guides you feature by feature."
+                    ctaText="Start with Professional (8 questions)"
+                    ctaMode={PrdMode.Professional}
+                    onCtaClick={onSelectMode}
+                    color="border-purple-500/50 hover:border-purple-500"
+                />
+                <ProfileRoadblockCard
+                    icon="🧪"
+                    title="Curious Enthusiast"
+                    fears={["Getting stuck without understanding the “why”"]}
+                    objections={["This has hidden rules"]}
+                    pains={["Data relationships", "app states", "blind debugging"]}
+                    helpText="PRD with “WHY” explanations, checkpoints, and step-by-step debugging prompts. You learn while building."
+                    ctaText="Start with Enterprise (12 steps)"
+                    ctaMode={PrdMode.Enterprise}
+                    onCtaClick={onSelectMode}
+                    color="border-green-500/50 hover:border-green-500"
+                />
+            </div>
         </section>
 
         {/* Choose Your Path Section */}
